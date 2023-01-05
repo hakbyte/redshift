@@ -14,8 +14,7 @@
   tags:
     - wordlists
 
-- name: Install RockYou wordlist
-  block:
+- block:
     - name: Download RockYou wordlist
       ansible.builtin.get_url:
         url: https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz

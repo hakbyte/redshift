@@ -12,8 +12,7 @@
   tags:
     - burpsuite
 
-- name: Install Burp Suite Community Edition
-  block:
+- block:
     - name: Download Burp Suite Community Edition
       ansible.builtin.get_url:
         url: https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.12.5&type=Linux

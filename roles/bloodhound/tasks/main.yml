@@ -6,8 +6,7 @@
   tags:
     - bloodhound
 
-- name: Install BloodHound
-  block:
+- block:
     - name: Download BloodHound
       ansible.builtin.get_url:
         url: https://github.com/BloodHoundAD/BloodHound/releases/download/4.2.0/BloodHound-linux-x64.zip
