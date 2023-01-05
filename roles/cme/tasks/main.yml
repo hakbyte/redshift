@@ -1,0 +1,28 @@
+---
+- name: Check if CrackMapExec is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/cme
+  register: stat_result
+  tags:
+    - cme
+
+- name: Install CrackMapExec
+  block:
+    - name: Download CrackMapExec
+      ansible.builtin.get_url:
+        url: https://github.com/Porchetta-Industries/CrackMapExec/releases/download/v5.4.0/cme-ubuntu-latest-3.11.zip
+        dest: /tmp/cme-ubuntu-latest-3.11.zip
+        mode: '644'
+        checksum: sha256:2f6ca33d58c28f9b55fe8d13c574dcabf575ae27f695c2947cb6d3e23e5be3d3
+      register: get_url_result
+      when: not stat_result.stat.exists
+
+    - name: Extract CrackMapExec
+      ansible.builtin.unarchive:
+        src: /tmp/cme-ubuntu-latest-3.11.zip
+        dest: /usr/local/bin
+        mode: '755'
+      when: not get_url_result.failed
+  when: not stat_result.stat.exists
+  tags:
+    - cme

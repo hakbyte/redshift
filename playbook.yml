@@ -1,0 +1,18 @@
+---
+- name: Install Hacking Tools
+  hosts: all
+  connection: local
+  become: yes
+  roles:
+    - role: neo4j
+    - role: bloodhound
+    - role: azurehound
+    - role: metasploit
+    - role: cme
+    - role: kerbrute
+    - role: windapsearch
+    - role: evil-winrm
+    - role: davtest
+    - role: burpsuite
+    - role: wordlists
+    - role: misc

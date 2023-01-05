@@ -1,0 +1,9 @@
+galaxy_info:
+  author: github.com/hakbyte
+  description: Install miscellaneous hacking tools
+  license: MIT
+  min_ansible_version: 2.1
+  platforms:
+    - name: Fedora
+      versions:
+        - 37

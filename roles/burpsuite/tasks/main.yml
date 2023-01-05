@@ -1,0 +1,31 @@
+---
+
+#
+# Install Burp Suite Community Edition.
+# Reference: https://portswigger.net/burp/documentation/enterprise/getting-started/unattended-installation
+#
+
+- name: Check if Burp Suite is already installed
+  ansible.builtin.stat:
+    path: /usr/local/lib/BurpSuiteCommunity
+  register: stat_result
+  tags:
+    - burpsuite
+
+- name: Install Burp Suite Community Edition
+  block:
+    - name: Download Burp Suite Community Edition
+      ansible.builtin.get_url:
+        url: https://portswigger-cdn.net/burp/releases/download?product=community&version=2022.12.5&type=Linux
+        dest: /tmp/burpsuite_community_linux_v2022_12_5.sh
+        mode: '755'
+        checksum: sha256:d93e8157916a85fc2a0b36ffc586bbccc77442e336590b324f655ef41da4a024
+      register: get_url_result
+
+    - name: Install Burp Suite Community Edition
+      ansible.builtin.command:
+        cmd: sh -c "/tmp/burpsuite_community_linux_v2022_12_5.sh -q -varfile {{ role_path }}/files/response.varfile"
+      when: not get_url_result.failed
+  when: not stat_result.stat.exists
+  tags:
+    - burpsuite

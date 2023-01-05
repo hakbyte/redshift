@@ -1,0 +1,6 @@
+---
+- name: Install miscellaneous hacking tools
+  ansible.builtin.dnf:
+    name: "{{ pkg }}"
+  tags:
+    - misc

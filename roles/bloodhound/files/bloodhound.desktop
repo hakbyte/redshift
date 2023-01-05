@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=bloodhound
+Encoding=UTF-8
+Exec=bloodhound
+Icon=/usr/share/icons/hicolor/scalable/apps/bloodhound.svg
+StartupNotify=false
+Terminal=false
+Type=Application
+StartupWMClass=bloodhound

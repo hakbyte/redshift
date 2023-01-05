@@ -1,0 +1,42 @@
+---
+- name: Create wordlists directory
+  ansible.builtin.file:
+    path: /usr/share/wordlists
+    state: directory
+    mode: '755'
+  tags:
+    - wordlists
+
+- name: Check if RockYou wordlist is already installed
+  ansible.builtin.stat:
+    path: /usr/share/wordlists/rockyou.txt
+  register: stat_result
+  tags:
+    - wordlists
+
+- name: Install RockYou wordlist
+  block:
+    - name: Download RockYou wordlist
+      ansible.builtin.get_url:
+        url: https://gitlab.com/kalilinux/packages/wordlists/-/raw/kali/master/rockyou.txt.gz
+        dest: /usr/share/wordlists/rockyou.txt.gz
+        mode: '644'
+        checksum: sha256:ded2d962815e1256df8f3a0d25173c4b21b6eee636117c36999246725a6d8f9f
+      register: get_url_result
+
+    - name: Extract RockYou wordlist
+      ansible.builtin.command:
+        cmd: gunzip /usr/share/wordlists/rockyou.txt.gz
+        creates: /usr/share/wordlists/rockyou.txt
+      when: not get_url_result.failed
+  when: not stat_result.stat.exists
+  tags:
+    - wordlists
+
+- name: Download SecLists
+  ansible.builtin.git:
+    repo: https://github.com/danielmiessler/SecLists
+    dest: /usr/share/seclists
+    depth: 1
+  tags:
+    - wordlists

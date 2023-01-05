@@ -1,0 +1,55 @@
+---
+- name: Check if BloodHound is already installed
+  ansible.builtin.stat:
+    path: /usr/local/lib/BloodHound/BloodHound
+  register: stat_result
+  tags:
+    - bloodhound
+
+- name: Install BloodHound
+  block:
+    - name: Download BloodHound
+      ansible.builtin.get_url:
+        url: https://github.com/BloodHoundAD/BloodHound/releases/download/4.2.0/BloodHound-linux-x64.zip
+        dest: /tmp/BloodHound-linux-x64.zip
+        mode: '644'
+        checksum: sha256:98aa35c31f41c95a5516b0cbb52bf6d429f96919d665c6a45a89a5559550639c
+      register: get_url_result
+
+    - name: Extract BloodHound
+      ansible.builtin.unarchive:
+        src: /tmp/BloodHound-linux-x64.zip
+        dest: /usr/local/lib/
+        mode: '755'
+      register: unarchive_result
+      when: not get_url_result.failed
+
+    - name: Rename BoodHound directory
+      ansible.builtin.command:
+        cmd: mv /usr/local/lib/BloodHound-linux-x64 /usr/local/lib/BloodHound
+        removes: /usr/local/lib/BloodHound-linux-x64
+        creates: /usr/local/lib/BloodHound
+      when: unarchive_result.changed
+
+    - name: Create link to BloodHound binary
+      ansible.builtin.file:
+        src: /usr/local/lib/BloodHound/BloodHound
+        dest: /usr/local/bin/bloodhound
+        owner: root
+        group: root
+        state: link
+
+    - name: Push BloodHound Desktop icon
+      ansible.builtin.copy:
+        src: bloodhound.svg
+        dest: /usr/share/icons/hicolor/scalable/apps/bloodhound.svg
+        mode: '644'
+
+    - name: Push BloodHound Desktop entry
+      ansible.builtin.copy:
+        src: bloodhound.desktop
+        dest: /usr/share/applications/bloodhound.desktop
+        mode: '644'
+  when: not stat_result.stat.exists
+  tags:
+    - bloodhound

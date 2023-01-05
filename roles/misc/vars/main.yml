@@ -1,0 +1,30 @@
+---
+pkg:
+  # Cracking
+  - hashcat
+  - hydra
+  - john
+
+  # Web
+  - cadaver
+  - ffuf
+  - nikto
+
+  # RDP
+  - freerdp
+  - rdesktop
+  - remmina
+
+  # Other
+  - awscli
+  - chisel
+  - community-mysql
+  - ftp
+  - nmap
+  - openldap-clients
+  - proxychains-ng
+  - rlwrap
+  - samba-client
+  - subfinder
+  - telnet
+  - wireshark

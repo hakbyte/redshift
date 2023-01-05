@@ -1,0 +1,21 @@
+---
+
+- name: Import Metasploit Framework GPG key
+  ansible.builtin.rpm_key:
+    key: https://apt.metasploit.com/metasploit-framework.gpg.key
+  tags:
+    - metasploit
+
+- name: Push Metasploit Framework repo
+  ansible.builtin.copy:
+    src: msf.repo
+    dest: /etc/yum.repos.d/msf.repo
+    mode: '644'
+  tags:
+    - metasploit
+
+- name: Install Metasploit Framework package
+  ansible.builtin.dnf:
+    name: metasploit-framework
+  tags:
+    - metasploit

@@ -1,0 +1,9 @@
+---
+- name: Install go-windapsearch
+  ansible.builtin.get_url:
+    url: https://github.com/ropnop/go-windapsearch/releases/download/v0.3.0/windapsearch-linux-amd64
+    dest: /usr/local/bin/windapsearch
+    mode: '755'
+    checksum: sha256:15abbc5e2422158d64b4f604424972309fb79bb53b59bf5a527b16662d8636c1
+  tags:
+    - windapsearch

@@ -1,0 +1,11 @@
+galaxy_info:
+  author: github.com/hakbyte
+  description: Install BloodHound
+  license: MIT
+  min_ansible_version: 2.1
+  platforms:
+    - name: Fedora
+      versions:
+        - 37
+dependencies:
+  - { role: neo4j }

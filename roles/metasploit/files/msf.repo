@@ -1,0 +1,5 @@
+[Metasploit-Framework]
+name=Metasploit Framework
+baseurl=https://rpm.metasploit.com/
+enabled=1
+gpgcheck=1

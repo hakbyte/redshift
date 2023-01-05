@@ -1,0 +1,31 @@
+---
+- name: Install dependency (perl-HTTP-DAV package)
+  ansible.builtin.dnf:
+    name: perl-HTTP-DAV
+  tags:
+    - davtest
+
+- name: Check if davtest is already installed
+  ansible.builtin.stat:
+    path: /usr/local/lib/davtest/davtest.pl
+  register: stat_result
+  tags:
+    - davtest
+
+- name: Download davtest
+  ansible.builtin.git:
+    repo: https://gitlab.com/kalilinux/packages/davtest
+    dest: /usr/local/lib/davtest
+    depth: 1
+  when: not stat_result.stat.exists
+  tags:
+    - davtest
+
+- name: Create link to davtest script
+  ansible.builtin.file:
+    src: /usr/local/lib/davtest/davtest.pl
+    dest: /usr/local/bin/davtest
+    state: link
+  when: stat_result.stat.exists
+  tags:
+    - davtest

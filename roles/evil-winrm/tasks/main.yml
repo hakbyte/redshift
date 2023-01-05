@@ -1,0 +1,13 @@
+---
+- name: Install Evil-WinRM dependencies
+  ansible.builtin.dnf:
+    name: ruby-devel
+  tags:
+    - evil-winrm
+
+- name: Install Evil-WinRM for all users
+  community.general.gem:
+    name: evil-winrm
+    user_install: false # install for all users
+  tags:
+    - evil-winrm

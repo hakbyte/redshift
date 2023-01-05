@@ -1,0 +1,6 @@
+# install4j response file for Burp Suite Community Edition
+sys.adminRights$Boolean=false
+sys.installationDir=/usr/local/lib/BurpSuiteCommunity
+sys.languageId=en
+sys.programGroupDisabled$Boolean=false
+sys.symlinkDir=/usr/local/bin

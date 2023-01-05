@@ -1,0 +1,5 @@
+[neo4j]
+name=Neo4j
+baseurl=https://yum.neo4j.com/stable/4.4
+enabled=1
+gpgcheck=1

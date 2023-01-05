@@ -1,0 +1,27 @@
+---
+- name: Check if AzureHound is already installed
+  stat:
+    path: /usr/local/bin/azurehound
+  register: stat_result
+  tags:
+    - azurehound
+
+- name: Install AzureHound
+  block:
+    - name: Download AzureHound
+      get_url:
+        url: https://github.com/BloodHoundAD/AzureHound/releases/download/v1.2.2/azurehound-linux-amd64.zip
+        dest: /tmp/azurehound-linux-amd64.zip
+        mode: '644'
+        checksum: sha256:f9cb116e04e85e9c4d822171c4963e1342ea86e278c9a8e1ec36019f9adebb7e
+      register: get_url_result
+
+    - name: Extract AzureHound
+      unarchive:
+        src: /tmp/azurehound-linux-amd64.zip
+        dest: /usr/local/bin
+        mode: '755'
+      when: not get_url_result.failed
+  when: not stat_result.stat.exists
+  tags:
+    - azurehound

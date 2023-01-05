@@ -1,0 +1,36 @@
+---
+
+#
+# Install Neo4j
+# References:
+#   - https://neo4j.com/docs/operations-manual/current/installation/linux/rpm/
+#   - https://yum.neo4j.com/
+#
+
+- name: Import Neo4j GPG key
+  ansible.builtin.rpm_key:
+    key: https://debian.neo4j.com/neotechnology.gpg.key
+  tags:
+    - neo4j
+
+- name: Push Neo4j repo
+  ansible.builtin.copy:
+    src: neo4j.repo
+    dest: /etc/yum.repos.d/neo4j.repo
+    mode: '644'
+  tags:
+    - neo4j
+
+- name: Install Neo4j package
+  ansible.builtin.dnf:
+    name: neo4j
+  tags:
+    - neo4j
+
+- name: Push Neo4j launch script
+  ansible.builtin.copy:
+    src: neo4j
+    dest: /usr/bin/neo4j
+    mode: '755'
+  tags:
+    - neo4j
