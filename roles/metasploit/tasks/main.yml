@@ -1,5 +1,4 @@
 ---
-
 - name: Import Metasploit Framework GPG key
   ansible.builtin.rpm_key:
     key: https://apt.metasploit.com/metasploit-framework.gpg.key
