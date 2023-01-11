@@ -1,5 +1,5 @@
 ---
-- name: Install Hacking Tools
+- name: Install Red Team Tools
   hosts: all
   connection: local
   become: yes
